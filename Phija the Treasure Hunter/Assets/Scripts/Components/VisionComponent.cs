@@ -11,17 +11,11 @@ namespace Components
         [SerializeField] private int visionRange = 1;
 
         public int VisionRange => visionRange;
-        private GameObject _hero;
-
-        private void Start()
-        {
-            _hero = GameObject.Find("Phija");
-        }
 
         private void Update()
         {
-            if (!IsInVision(_hero)) return;
-            Chase(_hero);
+            var enemyInVision = EnemyInVision();
+            if (enemyInVision is not null) Chase(enemyInVision);
         }
 
         /// <summary>
@@ -31,12 +25,26 @@ namespace Components
         private void Chase(GameObject @object)
         {
             Destroy(GetComponent<MovementBehaviorComponent>());
-            gameObject.AddComponent<FollowMovementBehaviorComponent>().FollowTarget = @object;  
+            gameObject.AddComponent<FollowMovementBehaviorComponent>().FollowTarget = @object;
         }
-        
+
         private bool IsInVision(GameObject @object)
         {
             return Vector2.Distance(transform.position, @object.transform.position) < VisionRange;
+        }
+
+        private GameObject EnemyInVision()
+        {
+            var enemyTeam = CompareTag("EnemyTeam")
+                ? GameObject.FindGameObjectsWithTag("HeroTeam")
+                : GameObject.FindGameObjectsWithTag("EnemyTeam");
+
+            foreach (var enemy in enemyTeam)
+            {
+                if (IsInVision(enemy)) return enemy;
+            }
+
+            return null;
         }
 
     }
