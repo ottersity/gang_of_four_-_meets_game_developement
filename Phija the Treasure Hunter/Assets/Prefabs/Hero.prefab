@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7892662180971755821}
   - component: {fileID: 1357616740437639469}
   - component: {fileID: 7160191474334390490}
+  - component: {fileID: -4828522921000902269}
   m_Layer: 0
   m_Name: Hero
   m_TagString: HeroTeam
@@ -127,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef9183ab8d54bd98f7ec5212a9e9622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthPointsMax: 50
   healthPoints: 50
 --- !u!114 &1357616740437639469
 MonoBehaviour:
@@ -141,6 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 2
+  attackPower: 1
 --- !u!58 &7160191474334390490
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -157,3 +160,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.345
+--- !u!114 &-4828522921000902269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3648743928476491003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fea220e7a27c4940ae4134feb77b04dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

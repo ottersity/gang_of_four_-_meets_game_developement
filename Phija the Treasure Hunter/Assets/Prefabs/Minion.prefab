@@ -140,8 +140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b4ee8bd398480c9bd3cfae5d0b4771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 
   attackRange: 1
+  attackPower: 1
 --- !u!114 &6210628552058898517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef9183ab8d54bd98f7ec5212a9e9622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthPointsMax: 12
   healthPoints: 12
 --- !u!58 &4782127394245675906
 CircleCollider2D:

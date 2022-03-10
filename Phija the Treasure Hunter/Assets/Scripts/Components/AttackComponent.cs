@@ -1,12 +1,13 @@
 using System;
 using System.Linq;
+using Pattern.Visitor;
 using Scripts.Components;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Components
 {
-    public class AttackComponent : MonoBehaviour
+    public class AttackComponent : MonoBehaviour, IElement
     {
 
         [SerializeField] private int attackRange;
@@ -20,9 +21,15 @@ namespace Components
             set => attackRange = value;
         }
 
-        private void Start()
+        [SerializeField] private int attackPower;
+
+        /// <summary>
+        /// This value decides how much hp an enemy will lose after being hit.
+        /// </summary>
+        public int AttackPower
         {
-            gameObject.AddComponent<CircleCollider2D>();
+            get => attackPower;
+            set => attackPower = value;
         }
 
         private void FixedUpdate()
@@ -30,11 +37,16 @@ namespace Components
             var objectsInRange = Physics2D.OverlapCircleAll(transform.position, AttackRange);
             if (objectsInRange.Length == 0) return;
 
-            var enemiesInRange = Array.FindAll(objectsInRange, val => !val.gameObject.CompareTag(tag)).ToArray();
+            var enemiesInRange = Array.FindAll(
+                objectsInRange,
+                val => !val.gameObject.CompareTag(tag) && !val.gameObject.CompareTag("NoTeam")
+            ).ToArray();
             if (enemiesInRange.Length == 0) return;
-            
-            enemiesInRange[0].GetComponent<HealthComponent>().LoseHealth(1);
+
+            enemiesInRange[0].GetComponent<HealthComponent>().LoseHealth(attackPower);
         }
+
+        public void Accept(IVisitor visitor) => visitor.Visit(this);
 
     }
 }

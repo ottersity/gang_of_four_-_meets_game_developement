@@ -41,10 +41,7 @@ namespace Components
         /// Initializes the movement to a specific ingame point / position.
         /// </summary>
         /// <param name="position"></param>
-        public void MoveTo(Vector2 position)
-        {
-            TargetPosition = position;
-        }
+        public void MoveTo(Vector2 position) => TargetPosition = position;
 
         /// <summary>
         /// Rounds the x, y values of a vector3 to the next nearest integer.

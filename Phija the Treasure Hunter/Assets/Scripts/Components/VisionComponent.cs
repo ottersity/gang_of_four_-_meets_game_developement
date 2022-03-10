@@ -1,16 +1,21 @@
 using System;
 using Components.MovementBehavior;
+using Pattern.Visitor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Components
 {
-    public class VisionComponent : MonoBehaviour
+    public class VisionComponent : MonoBehaviour, IElement
     {
 
         [SerializeField] private int visionRange = 1;
 
-        public int VisionRange => visionRange;
+        public int VisionRange
+        {
+            get => visionRange;
+            set => visionRange = value;
+        }
 
         private void Update()
         {
@@ -47,5 +52,6 @@ namespace Components
             return null;
         }
 
+        public void Accept(IVisitor visitor) => visitor.Visit(this);
     }
 }
