@@ -37,7 +37,7 @@ public class Startup : MonoBehaviour
             var minion = Instantiate(minionPrefab);
             var scoutVisionComponent = scouts[i % 2].GetComponent<VisionComponent>();
             var minionVisionComponent = minion.GetComponent<VisionComponent>();
-            scoutVisionComponent.Subscribe(minionVisionComponent);
+            scoutVisionComponent.enemySpottedEvent.AddListener(minionVisionComponent.OnEnemySpotted);
         } 
 
     }
