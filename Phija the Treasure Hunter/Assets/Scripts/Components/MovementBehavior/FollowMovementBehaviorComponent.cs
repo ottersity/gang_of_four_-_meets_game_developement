@@ -18,6 +18,7 @@ namespace Components.MovementBehavior
         
         private void Update()
         {
+            if (FollowTarget == null) return;
             SendMessage("MoveTo", (Vector2) FollowTarget.transform.position);
         }
     }
