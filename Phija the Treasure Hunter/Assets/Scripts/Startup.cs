@@ -1,4 +1,7 @@
 using Components;
+using Components.MovementBehavior;
+using Scripts.Components;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -24,20 +27,15 @@ public class Startup : MonoBehaviour
         var treasure = Instantiate(treasurePrefab);
 
         var scoutPrefab = PrefabUtility.LoadPrefabContents("Assets/Prefabs/MinionScout.prefab");
-        var scouts = new GameObject[2];
-        for (var i = 0; i < scouts.Length; i++)
-        {
-            var scout = Instantiate(scoutPrefab);
-            scouts[i] = scout;
-        }
+        var scouts = new[]{ Instantiate(scoutPrefab), Instantiate(scoutPrefab) };
 
         var minionPrefab = PrefabUtility.LoadPrefabContents("Assets/Prefabs/Minion.prefab");
         for (var i = 0; i < 10; i++)
         {
             var minion = Instantiate(minionPrefab);
             var scoutVisionComponent = scouts[i % 2].GetComponent<VisionComponent>();
-            var minionVisionComponent = minion.GetComponent<VisionComponent>();
-            scoutVisionComponent.enemySpottedEvent.AddListener(minionVisionComponent.OnEnemySpotted);
+            var minionVisionComponent = minion.GetComponent<VisionComponent>(); 
+            scoutVisionComponent.EnemySpottedEvent += minionVisionComponent.OnEnemySpottedEvent;
         } 
 
     }

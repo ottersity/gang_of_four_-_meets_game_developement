@@ -1,16 +1,18 @@
 using System;
-using System.Collections.Generic;
 using Components.MovementBehavior;
 using Pattern.Visitor;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Components
 {
     public class VisionComponent : MonoBehaviour, IElement
     {
 
-        public UnityEvent<object, GameObject> enemySpottedEvent = new();
+        /// <summary>
+        /// Informs subscribers if an enemy is in sight.
+        /// </summary>
+        public event EventHandler<GameObject> EnemySpottedEvent;
 
         [SerializeField] private int visionRange = 1;
 
@@ -25,7 +27,7 @@ namespace Components
             var enemyInVision = EnemyInVision();
             if (enemyInVision is not null)
             {
-                enemySpottedEvent.Invoke(this, enemyInVision);
+                EnemySpottedEvent?.Invoke(this, enemyInVision);
                 Chase(enemyInVision);
             }
         }
@@ -49,7 +51,7 @@ namespace Components
         {
             return Vector2.Distance(transform.position, @object.transform.position) < VisionRange;
         }
-
+        
         /// <summary>
         /// Searches for enemies in sight and returns the first found enemy.
         /// There is no sorting about distance to the enemy or something.
@@ -69,7 +71,13 @@ namespace Components
         }
 
         public void Accept(IVisitor visitor) => visitor.Visit(this);
+        
+        /// <summary>
+        /// Callback for `EnemySpottedEvent` will start chasing the spotted enemy.
+        /// </summary>
+        /// <param name="sender">Who spotted the enemy</param>
+        /// <param name="obj">The spotted enemy</param>
+        public void OnEnemySpottedEvent(object sender, GameObject obj) => Chase(obj);
 
-        public void OnEnemySpotted(object sender, GameObject enemy) => Chase(enemy);
     }
 }
